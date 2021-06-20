@@ -8,6 +8,7 @@ const fruits = { Apple: 0, Orange: 0 };
 
 function App() {
   const [totalCost, setTotalCost] = useState(0);
+  const [offerTime, setOfferTime] = useState(true);
 
   const handleCheckout = (input) => {
     let fruitsChart = fruits;
@@ -23,8 +24,19 @@ function App() {
   };
 
   const calculateTotalCost = (items) => {
-    let appleCost = items.Apple * 0.6;
-    let orangeCost = items.Orange * 0.25;
+    let appleCost;
+    let orangeCost;
+
+    if (offerTime) {
+      const applePair = Math.floor(items.Apple / 2);
+      appleCost = (applePair + (items.Apple % 2)) * 0.6;
+
+      const orangeBundle = Math.floor(items.Orange / 3);
+      orangeCost = (orangeBundle * 2 + (items.Orange % 3)) * 0.25;
+    } else {
+      appleCost = items.Apple * 0.6;
+      orangeCost = items.Orange * 0.25;
+    }
 
     return appleCost + orangeCost;
   };
